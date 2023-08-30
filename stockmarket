@@ -1,0 +1,77 @@
+// ==UserScript==
+// @name         updated: stock market buy<3 sell>100 mit schleife
+// @namespace    http://your.namespace/
+// @version      0.2
+// @description  Automated selling and buying in bank minigame for Cookie Clicker game.
+// @author       DB
+// @match        https://orteil.dashnet.org/cookieclicker/
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    function buyStock(currentPrice, index){
+        // Find the button element for buying
+        const buyButton = document.querySelector(`div#bankGood-${index}_Max.bankButton.bankButtonBuy`);
+
+        // Check if the button element exists
+        if (buyButton) {
+            // Click the buy button to initiate the purchase
+            buyButton.click();
+            console.log(`Buy button found and bought for ${currentPrice} at index ${index}.`);
+        } else {
+            console.log(`Buy button not found for index ${index}.`);
+        }
+    }
+
+    function sellStock(currentPrice, index){
+        // Find the button element for selling
+        const sellButton = document.querySelector(`div#bankGood-${index}_-All.bankButton.bankButtonSell`);
+
+
+        // Check if the button element exists
+        if (sellButton) {
+            // Click the sell button to initiate the sale
+            sellButton.click();
+            console.log(`Sell button found and sold for ${currentPrice} at index ${index}.`);
+        } else {
+            console.log(`Sell button not found for index ${index}.`);
+        }
+    }
+
+    function main() {
+        const targetPrice = 3; // Example target price for buying
+        const sellTargetPrice = 100; // Example target price for selling
+        const maxIndex = 20; // Maximum index to iterate through
+
+        setInterval(function() {
+            for (let index = 0; index <= maxIndex; index++) {
+                const spanElement = document.getElementById(`bankGood-${index}-val`);
+
+                if (spanElement) {
+                    const textContent = spanElement.textContent;
+                    const cleanedValue = textContent.substring(1).replace(',', ''); // Remove $ and commas
+                    const numericValue = parseFloat(cleanedValue);
+
+                    if (!isNaN(numericValue)) {
+                        if (numericValue < targetPrice) {
+                            buyStock(numericValue, index);
+                        } else if (numericValue > sellTargetPrice) {
+                            sellStock(numericValue, index);
+                        }
+                    }
+                } else {
+                    console.log(`Element with ID bankGood-${index}-val not found.`);
+                }
+            }
+        }, 50000); // Check every 50 seconds
+    }
+
+    main();
+})();
+
+// weitere Funktionalitäten, die man verwenden und einbauen könnte:
+//         const hideButton = document.querySelector(`div#bankGood-${index}-viewHide.bankViewHide.bankSimpleButton`);
+//         jedes mal, wenn eingekauft wird auf sichtbar stellen und unsichtbar bei verkauf,
+//         dafür kucken, ob feld sichtbar ist (vielleicht eine einstellung, weiß ich nicht)
