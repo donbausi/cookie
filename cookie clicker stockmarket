@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         updated: stock market buy<3 sell>100 mit schleife
+// @name         updated: stock market buy<3 sell>100 with loop
 // @namespace    http://your.namespace/
 // @version      0.2
 // @description  Automated selling and buying in bank minigame for Cookie Clicker game.
@@ -70,6 +70,8 @@
 
     main();
 })();
+
+// u can clear all lines with console.log in it. they have no functionality but are just for the development
 
 // weitere Funktionalitäten, die man verwenden und einbauen könnte:
 //         const hideButton = document.querySelector(`div#bankGood-${index}-viewHide.bankViewHide.bankSimpleButton`);
